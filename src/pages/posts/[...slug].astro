@@ -1,0 +1,209 @@
+---
+import { Image, getImage } from "astro:assets"
+import { render } from "astro:content"
+import { Clock } from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { UserAvatar } from "@/components/user-avatar"
+import { SITE } from "@/config"
+import Layout from "@/layouts/main.astro"
+import { getAuthor } from "@/lib/authors"
+import { estimateReadingTime, formatDate } from "@/lib/format"
+import { getPosts, type Post } from "@/lib/posts"
+
+export async function getStaticPaths() {
+  const posts = await getPosts()
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      newer: posts[index - 1] ?? null,
+      older: posts[index + 1] ?? null,
+    },
+  }))
+}
+
+interface Props {
+  post: Post
+  newer: Post | null
+  older: Post | null
+}
+
+const { post, newer, older } = Astro.props
+const { Content } = await render(post)
+
+const readingTime = estimateReadingTime(post.body)
+const updated = post.data.updatedDate ?? null
+const author = getAuthor(post.data.author)
+const showDraftBadge = import.meta.env.DEV && post.data.draft
+
+// Resolve a social-preview URL for the cover at full width.
+const coverMeta = post.data.cover
+  ? await getImage({
+      src: post.data.cover,
+      width: 1200,
+      height: 630,
+      fit: "cover",
+      format: "jpg",
+    })
+  : null
+const ogImage = coverMeta
+  ? new URL(coverMeta.src, Astro.site ?? SITE.url).href
+  : undefined
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  publishedTime={post.data.pubDate}
+  modifiedTime={updated ?? undefined}
+  author={author.name}
+  ogImage={ogImage}
+  ogImageWidth={coverMeta?.attributes.width}
+  ogImageHeight={coverMeta?.attributes.height}
+  ogImageAlt={post.data.coverAlt}
+>
+  <article class="flex flex-col gap-8">
+    <header class="flex flex-col gap-4">
+      <a
+        href="/posts"
+        class="w-fit text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        &larr; All posts
+      </a>
+
+      {
+        post.data.cover && (
+          <Image
+            src={post.data.cover}
+            alt={post.data.coverAlt ?? ""}
+            widths={[640, 1024, 1536]}
+            sizes="(min-width: 768px) 45rem, calc(100vw - 3rem)"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            class="aspect-2/1 w-full rounded-xl border border-border object-cover"
+          />
+        )
+      }
+
+      <div class="flex flex-col gap-3">
+        <h1
+          class="font-heading text-3xl font-medium tracking-tight text-balance"
+        >
+          {post.data.title}
+        </h1>
+        <p class="text-lg text-pretty text-muted-foreground">
+          {post.data.description}
+        </p>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
+      >
+        <span class="flex items-center gap-2 text-foreground">
+          <UserAvatar
+            name={author.name}
+            src={author.avatar}
+            className="size-6"
+            initialsClassName="text-xs"
+          />
+          <span>
+            By{" "}
+            {
+              author.url ? (
+                <a
+                  href={author.url}
+                  class="font-medium underline-offset-4 hover:underline"
+                >
+                  {author.name}
+                </a>
+              ) : (
+                <span class="font-medium">{author.name}</span>
+              )
+            }
+          </span>
+        </span>
+        <span aria-hidden="true">&middot;</span>
+        <time datetime={post.data.pubDate.toISOString()}>
+          {formatDate(post.data.pubDate)}
+        </time>
+        {
+          updated && (
+            <>
+              <span aria-hidden="true">&middot;</span>
+              <span>
+                Updated{" "}
+                <time datetime={updated.toISOString()}>
+                  {formatDate(updated)}
+                </time>
+              </span>
+            </>
+          )
+        }
+        {
+          readingTime > 0 && (
+            <>
+              <span aria-hidden="true">&middot;</span>
+              <span class="inline-flex items-center gap-1">
+                <Clock aria-hidden="true" className="size-3.5" />
+                {readingTime} min read
+              </span>
+            </>
+          )
+        }
+        {showDraftBadge && <Badge variant="outline">Draft</Badge>}
+      </div>
+
+      {
+        post.data.tags.length > 0 && (
+          <ul class="flex flex-wrap items-center gap-1">
+            {post.data.tags.map((tag) => (
+              <li>
+                <Badge variant="secondary">{tag}</Badge>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    {/* TODO: table of contents, footnotes, syntax highlighting */}
+    <div class="prose max-w-none">
+      <Content />
+    </div>
+
+    {
+      (newer || older) && (
+        <nav
+          class="grid gap-4 border-t border-border pt-6 sm:grid-cols-2"
+          aria-label="Posts"
+        >
+          {newer ? (
+            <a href={`/posts/${newer.id}`} class="group flex flex-col gap-1">
+              <span class="text-xs text-muted-foreground">&larr; Newer</span>
+              <span class="text-sm group-hover:underline">
+                {newer.data.title}
+              </span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {older && (
+            <a
+              href={`/posts/${older.id}`}
+              class="group flex flex-col gap-1 sm:items-end sm:text-right"
+            >
+              <span class="text-xs text-muted-foreground">Older &rarr;</span>
+              <span class="text-sm group-hover:underline">
+                {older.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )
+    }
+  </article>
+</Layout>

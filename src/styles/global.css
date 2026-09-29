@@ -3,6 +3,8 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
 
+@plugin "@tailwindcss/typography";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -130,4 +132,51 @@
   html {
     @apply font-sans;
     }
+}
+
+/* Map the typography plugin's gray palette onto the shadcn theme tokens.
+   Deliberately unlayered: the plugin declares its own --tw-prose-* defaults
+   on .prose inside the components layer, so a @layer base block would lose. */
+.prose {
+    --tw-prose-body: var(--foreground);
+    --tw-prose-headings: var(--foreground);
+    --tw-prose-lead: var(--muted-foreground);
+    --tw-prose-links: var(--foreground);
+    --tw-prose-bold: var(--foreground);
+    --tw-prose-counters: var(--muted-foreground);
+    --tw-prose-bullets: var(--muted-foreground);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--foreground);
+    --tw-prose-quote-borders: var(--border);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-code: var(--foreground);
+    --tw-prose-pre-bg: var(--muted);
+    --tw-prose-pre-code: var(--foreground);
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+    --tw-prose-kbd: var(--foreground);
+    --tw-prose-kbd-shadows: var(--foreground);
+}
+
+@layer components {
+  /* Tighten the plugin's default vertical rhythm to match the card spacing. */
+  .prose {
+    --tw-prose-space-2xl: 2rem;
+    --tw-prose-space-3xl: 2.5rem;
+  }
+}
+
+/* Shiki runs with defaultColor: false, so it emits --shiki-light /
+   --shiki-dark custom properties and leaves the actual colours to us.
+   Unlayered so these beat the typography plugin's code colours. */
+:root:not(.dark) .astro-code,
+:root:not(.dark) .astro-code span {
+    color: var(--shiki-light);
+    background-color: var(--shiki-light-bg);
+}
+
+.dark .astro-code,
+.dark .astro-code span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
 }

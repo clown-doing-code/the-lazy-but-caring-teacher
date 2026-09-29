@@ -1,17 +1,54 @@
 ---
+import PostCard from "@/components/post-card.astro"
+import { buttonVariants } from "@/components/ui/button"
+import { SITE } from "@/config"
 import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+import { getPosts } from "@/lib/posts"
+import { cn } from "cn"
+
+const posts = (await getPosts()).slice(0, 3)
 ---
 
 <Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
-      </div>
+  <section class="flex flex-col gap-6">
+    <div class="flex flex-col gap-3">
+      <h1 class="font-heading text-3xl font-medium tracking-tight sm:text-4xl">
+        {SITE.name}
+      </h1>
+      <p class="max-w-prose text-lg text-muted-foreground">
+        Hi, welcome to my blog. I mainly talk about random stuffs, mostly
+        computer science and English :P
+      </p>
     </div>
-  </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <a href="/about" class={cn(buttonVariants({ size: "lg" }), "px-4")}>
+        About me
+      </a>
+      <a
+        href="#latest"
+        class={cn(buttonVariants({ variant: "outline", size: "lg" }), "px-4")}
+      >
+        Latest posts
+      </a>
+    </div>
+  </section>
+
+  <section id="latest" class="mt-16 flex scroll-mt-20 flex-col gap-6">
+    <h2 class="font-heading text-lg font-medium tracking-tight">
+      Latest writing
+    </h2>
+    {
+      posts.length > 0 ? (
+        <div class="grid gap-4">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <p class="text-muted-foreground">
+          TODO: no posts published yet. They will show up here.
+        </p>
+      )
+    }
+  </section>
 </Layout>

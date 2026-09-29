@@ -1,0 +1,27 @@
+---
+import { Globe } from "lucide-react"
+
+import { SOCIAL_ICONS, isSocialIconSlug } from "@/lib/social-icons"
+import { cn } from "cn"
+
+interface Props {
+  // Known slugs autocomplete, but any string is accepted so networks without
+  // a brand icon (LinkedIn) still work via the generic fallback.
+  slug: string
+  class?: string
+}
+
+// `class` sizes the wrapper box; the inner <svg> is stretched to fill it,
+// because markup injected via set:html is not seen by the Tailwind scanner.
+const { slug, class: className = "size-4" } = Astro.props
+---
+
+<span class={cn("inline-flex shrink-0 [&_svg]:size-full", className)}>
+  {
+    isSocialIconSlug(slug) ? (
+      <Fragment set:html={SOCIAL_ICONS[slug]} />
+    ) : (
+      <Globe aria-hidden="true" className="size-full" />
+    )
+  }
+</span>

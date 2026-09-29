@@ -1,0 +1,26 @@
+import { defineCollection } from "astro:content"
+import { glob } from "astro/loaders"
+import { z } from "astro/zod"
+import { PRIMARY_AUTHOR } from "@/config"
+
+const posts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
+  // `image` is injected per entry by the content layer; it is not a named
+  // export of `astro:content`, so the schema is built from the context.
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      tags: z.array(z.string()).default([]),
+      draft: z.boolean().default(false),
+      /** Key into AUTHORS in src/config.ts. */
+      author: z.string().default(PRIMARY_AUTHOR),
+      /** Shown above the title. Omit for posts without one. */
+      cover: image().optional(),
+      coverAlt: z.string().optional(),
+    }),
+})
+
+export const collections = { posts }

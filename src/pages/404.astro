@@ -1,0 +1,18 @@
+---
+import { buttonVariants } from "@/components/ui/button"
+import Layout from "@/layouts/main.astro"
+import { cn } from "cn"
+---
+
+<Layout title="Page not found" description="TODO: site description.">
+  <section class="flex flex-col items-start gap-6">
+    <p class="text-sm text-muted-foreground">404</p>
+    <h1 class="font-heading text-3xl font-medium tracking-tight">
+      Page not found
+    </h1>
+    <p class="max-w-prose text-muted-foreground">
+      TODO: one line on what might have gone wrong, or just point them home.
+    </p>
+    <a href="/" class={cn(buttonVariants(), "px-4")}>Back to home</a>
+  </section>
+</Layout>

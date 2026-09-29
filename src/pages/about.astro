@@ -1,0 +1,100 @@
+---
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import SocialIcon from "@/components/social-icon.astro"
+import { UserAvatar } from "@/components/user-avatar"
+import { ABOUT, SOCIALS } from "@/config"
+import { getAuthor } from "@/lib/authors"
+import Layout from "@/layouts/main.astro"
+
+const author = getAuthor(undefined)
+---
+
+<Layout
+  title="About"
+  description={`TODO: one sentence about ${author.name}, used as the page description.`}
+>
+  <article class="flex flex-col gap-10">
+    <header class="flex flex-col gap-6">
+      <h1 class="font-heading text-3xl font-medium tracking-tight">About</h1>
+      <div
+        class="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7"
+      >
+        <UserAvatar
+          name={author.name}
+          src={author.avatar}
+          className="size-24 shrink-0 sm:size-32"
+          initialsClassName="text-2xl sm:text-3xl"
+        />
+        <div class="flex flex-col gap-1">
+          <p class="font-heading text-lg font-medium">{author.name}</p>
+          {author.role && <p class="text-muted-foreground">{author.role}</p>}
+        </div>
+      </div>
+    </header>
+
+    <section class="flex flex-col gap-4">
+      <h2 class="font-heading text-lg font-medium tracking-tight">
+        The short version
+      </h2>
+      <div class="flex flex-col gap-4 text-muted-foreground">
+        {ABOUT.intro.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+
+    <Separator />
+
+    <section class="flex flex-col gap-4">
+      <h2 class="font-heading text-lg font-medium tracking-tight">
+        What I write about
+      </h2>
+      <ul class="flex flex-wrap items-center gap-2">
+        {
+          ABOUT.topics.map((topic) => (
+            <li>
+              <Badge variant="secondary">{topic}</Badge>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <Separator />
+
+    <section class="flex flex-col gap-4">
+      <h2 class="font-heading text-lg font-medium tracking-tight">Elsewhere</h2>
+      {
+        SOCIALS.length > 0 ? (
+          <ul class="flex flex-wrap items-center gap-5">
+            {SOCIALS.map((social) => (
+              <li>
+                <a
+                  href={social.href}
+                  rel="me noopener"
+                  target="_blank"
+                  class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <SocialIcon slug={social.icon} class="size-4" />
+                  {social.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href="/rss.xml"
+                class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <SocialIcon slug="rss" class="size-4" />
+                RSS feed
+              </a>
+            </li>
+          </ul>
+        ) : (
+          <p class="text-muted-foreground">
+            TODO: add your profiles in src/config.ts.
+          </p>
+        )
+      }
+    </section>
+  </article>
+</Layout>

@@ -1,0 +1,38 @@
+---
+import SocialIcon from "@/components/social-icon.astro"
+import { SOCIALS } from "@/config"
+import { getAuthor } from "@/lib/authors"
+
+const year = new Date().getFullYear()
+const author = getAuthor(undefined)
+const linkClass =
+  "text-muted-foreground transition-colors hover:text-foreground"
+---
+
+<footer class="mt-auto w-full border-t border-border">
+  <div
+    class="mx-auto flex w-full max-w-3xl flex-col gap-4 px-6 py-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p>{`© ${year} ${author.name}. `}</p>
+    <nav class="flex items-center gap-4" aria-label="Elsewhere">
+      {
+        SOCIALS.map((social) => (
+          <a
+            href={social.href}
+            rel="me noopener"
+            target="_blank"
+            title={social.label}
+            class={linkClass}
+          >
+            <span class="sr-only">{social.label}</span>
+            <SocialIcon slug={social.icon} />
+          </a>
+        ))
+      }
+      <a href="/rss.xml" title="RSS feed" class={linkClass}>
+        <span class="sr-only">RSS feed</span>
+        <SocialIcon slug="rss" />
+      </a>
+    </nav>
+  </div>
+</footer>

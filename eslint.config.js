@@ -19,4 +19,11 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    // shadcn registry files export their cva variants alongside components
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "react-refresh/only-export-components": "off",
+    },
+  },
 ])
