@@ -10,11 +10,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { NAV, type NavItem } from "@/config"
+import { isActiveNav } from "@/lib/url"
 import { cn } from "cn"
-
-function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href)
-}
 
 export function MobileNav({ pathname }: { pathname: string }) {
   return (
@@ -37,7 +34,7 @@ export function MobileNav({ pathname }: { pathname: string }) {
         </SheetHeader>
         <nav className="flex flex-col gap-1 p-4" aria-label="Mobile">
           {NAV.map((item: NavItem) => {
-            const active = isActive(pathname, item.href)
+            const active = isActiveNav(pathname, item.href)
             return (
               <SheetClose
                 key={item.href}

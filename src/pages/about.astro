@@ -6,8 +6,10 @@ import { UserAvatar } from "@/components/user-avatar"
 import { ABOUT, SOCIALS } from "@/config"
 import { getAuthor } from "@/lib/authors"
 import Layout from "@/layouts/main.astro"
+import { withBase } from "@/lib/url"
 
 const author = getAuthor(undefined)
+const rssHref = withBase("/rss.xml")
 ---
 
 <Layout
@@ -81,7 +83,7 @@ const author = getAuthor(undefined)
             ))}
             <li>
               <a
-                href="/rss.xml"
+                href={rssHref}
                 class="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 <SocialIcon slug="rss" class="size-4" />

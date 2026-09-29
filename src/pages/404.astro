@@ -1,6 +1,7 @@
 ---
 import { buttonVariants } from "@/components/ui/button"
 import Layout from "@/layouts/main.astro"
+import { withBase } from "@/lib/url"
 import { cn } from "cn"
 ---
 
@@ -13,6 +14,8 @@ import { cn } from "cn"
     <p class="max-w-prose text-muted-foreground">
       TODO: one line on what might have gone wrong, or just point them home.
     </p>
-    <a href="/" class={cn(buttonVariants(), "px-4")}>Back to home</a>
+    <a href={withBase("/")} class={cn(buttonVariants(), "px-4")}>
+      Back to home
+    </a>
   </section>
 </Layout>

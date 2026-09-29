@@ -2,8 +2,10 @@
 import SocialIcon from "@/components/social-icon.astro"
 import { SOCIALS } from "@/config"
 import { getAuthor } from "@/lib/authors"
+import { withBase } from "@/lib/url"
 
 const year = new Date().getFullYear()
+const rssHref = withBase("/rss.xml")
 const author = getAuthor(undefined)
 const linkClass =
   "text-muted-foreground transition-colors hover:text-foreground"
@@ -29,7 +31,7 @@ const linkClass =
           </a>
         ))
       }
-      <a href="/rss.xml" title="RSS feed" class={linkClass}>
+      <a href={rssHref} title="RSS feed" class={linkClass}>
         <span class="sr-only">RSS feed</span>
         <SocialIcon slug="rss" />
       </a>

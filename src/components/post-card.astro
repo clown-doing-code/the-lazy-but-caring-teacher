@@ -9,13 +9,14 @@ import {
   CardHeader,
 } from "@/components/ui/card"
 import { formatDate } from "@/lib/format"
+import { withBase } from "@/lib/url"
 
 interface Props {
   post: CollectionEntry<"posts">
 }
 
 const { post } = Astro.props
-const href = `/posts/${post.id}`
+const href = withBase(`/posts/${post.id}/`)
 ---
 
 <Card>

@@ -4,7 +4,7 @@ description: "In this essay, Anny explores the consequences of a very controvers
 pubDate: 2026-09-29
 tags: ["English Project", "Writing", "Teaching"]
 author: anny
-cover: ../../assets/human-organs (1).jpg
+cover: ../../assets/human-organs.jpg
 coverAlt: "Hands holding an heart"
 ---
 

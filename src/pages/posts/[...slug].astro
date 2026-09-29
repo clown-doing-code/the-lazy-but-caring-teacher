@@ -10,6 +10,7 @@ import Layout from "@/layouts/main.astro"
 import { getAuthor } from "@/lib/authors"
 import { estimateReadingTime, formatDate } from "@/lib/format"
 import { getPosts, type Post } from "@/lib/posts"
+import { withBase } from "@/lib/url"
 
 export async function getStaticPaths() {
   const posts = await getPosts()
@@ -68,7 +69,7 @@ const ogImage = coverMeta
   <article class="flex flex-col gap-8">
     <header class="flex flex-col gap-4">
       <a
-        href="/posts"
+        href={withBase("/posts")}
         class="w-fit text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         &larr; All posts
@@ -182,7 +183,10 @@ const ogImage = coverMeta
           aria-label="Posts"
         >
           {newer ? (
-            <a href={`/posts/${newer.id}`} class="group flex flex-col gap-1">
+            <a
+              href={withBase(`/posts/${newer.id}/`)}
+              class="group flex flex-col gap-1"
+            >
               <span class="text-xs text-muted-foreground">&larr; Newer</span>
               <span class="text-sm group-hover:underline">
                 {newer.data.title}
@@ -193,7 +197,7 @@ const ogImage = coverMeta
           )}
           {older && (
             <a
-              href={`/posts/${older.id}`}
+              href={withBase(`/posts/${older.id}/`)}
               class="group flex flex-col gap-1 sm:items-end sm:text-right"
             >
               <span class="text-xs text-muted-foreground">Older &rarr;</span>

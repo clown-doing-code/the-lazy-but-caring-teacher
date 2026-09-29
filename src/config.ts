@@ -1,10 +1,13 @@
+import { withBase } from "@/lib/url"
+
 export const SITE = {
   // TODO: replace with the real title and tagline
   name: "The Lazy but Caring Teacher <3",
   title: "The Lazy but Caring Teacher <3",
   description: "TODO: one sentence describing what this blog is about.",
-  // TODO: point this at the real domain before deploying
-  url: "https://example.com",
+  // Must match `site` in astro.config.mjs. Keep it at the origin only — the
+  // subfolder lives in `base`, and every link already carries it.
+  url: "https://clown-doing-code.github.io",
   locale: "en_US",
 } as const
 
@@ -26,9 +29,8 @@ export const AUTHORS: Record<string, Author> = {
   emilio: {
     name: "Emilio Alcántara",
     role: "Teacher",
-    // TODO: drop a photo into /public and uncomment this
-    avatar: "/profile_picture.jpeg",
-    url: "/about",
+    avatar: withBase("/profile_picture.jpeg"),
+    url: withBase("/about"),
     email: "emiliojacosta@icloud.com",
   },
   // TODO: add co-authors here, then set `author: "<key>"` in a post's
@@ -51,9 +53,9 @@ export type NavItem = {
 }
 
 export const NAV: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Posts", href: "/posts" },
-  { label: "About", href: "/about" },
+  { label: "Home", href: withBase("/") },
+  { label: "Posts", href: withBase("/posts") },
+  { label: "About", href: withBase("/about") },
 ]
 
 export type Social = {
