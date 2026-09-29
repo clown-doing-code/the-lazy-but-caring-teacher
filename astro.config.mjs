@@ -7,12 +7,12 @@ import react from "@astrojs/react"
 
 // https://astro.build/config
 export default defineConfig({
-  // Origin only — the subfolder lives in `base` below.
-  site: "https://clown-doing-code.github.io",
-  // GitHub Pages project sites are served from a subfolder, so every internal
-  // link and asset needs this prefix. When you attach a custom domain, set this
-  // to "/" and update `site`; no source changes needed (see src/lib/url.ts).
-  base: "/the-lazy-but-caring-teacher",
+  // Custom domain, set in public/CNAME.
+  site: "https://thelazybutcaringteacher.site",
+  // A custom domain is served from the root, so no subfolder prefix is needed.
+  // Internal links go through withBase() in src/lib/url.ts, so this stays a
+  // one-line change if you ever move the site back to a subfolder.
+  base: "/",
   // GitHub Pages serves /about/ but returns 404 for /about, so links must
   // carry the trailing slash.
   trailingSlash: "always",

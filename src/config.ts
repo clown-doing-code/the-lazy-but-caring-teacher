@@ -5,9 +5,8 @@ export const SITE = {
   name: "The Lazy but Caring Teacher <3",
   title: "The Lazy but Caring Teacher <3",
   description: "TODO: one sentence describing what this blog is about.",
-  // Must match `site` in astro.config.mjs. Keep it at the origin only — the
-  // subfolder lives in `base`, and every link already carries it.
-  url: "https://clown-doing-code.github.io",
+  // Must match `site` in astro.config.mjs.
+  url: "https://thelazybutcaringteacher.site",
   locale: "en_US",
 } as const
 
