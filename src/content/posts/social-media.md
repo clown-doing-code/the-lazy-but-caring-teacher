@@ -1,11 +1,11 @@
 ---
 title: "Social Media Has Improved Human Communication"
-description: "In this essay, Carlos argues about the impact of social media in communication nowadays."
+description: "Carlos argues that social media weakens communication, crowding out face-to-face time and attention."
 pubDate: 2026-09-29
 tags: ["English Project", "Writing", "Teaching"]
 author: carlos
 cover: ../../assets/social-media.png
-coverAlt: "Social media"
+coverAlt: "A hand holding a smartphone showing a grid of social media app icons"
 ---
 
 Social media is an important part of modern life. It has changed the way people communicate 

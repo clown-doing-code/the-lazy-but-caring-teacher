@@ -1,11 +1,11 @@
 ---
 title: "The Sale of Human Organs Should Be Legalized."
-description: "In this essay, Anny explores the consequences of a very controversial practice; the sale of human organs."
+description: "Anny argues that legalizing organ sales would fuel trafficking and exploit the poor who need the money."
 pubDate: 2026-09-29
 tags: ["English Project", "Writing", "Teaching"]
 author: anny
 cover: ../../assets/human-organs.jpg
-coverAlt: "Hands holding an heart"
+coverAlt: "Two cupped hands holding a human heart"
 ---
 
 The sale of human organs is a controversial topic around the world. Although some people believe that it could save the lives of patients who need a transplant, legalizing organ sales could cause serious problems. It could increase organ trafficking and put many lives at risk. Moreover, poor people might feel pressured to sell their organs because they need money.
