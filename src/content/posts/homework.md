@@ -2,7 +2,7 @@
 title: "Education Debate"
 description: "In this piece of writing, Emely briefly comments on the downsides of homework and its consequences when it's assigned excessively"
 pubDate: 2026-09-30
-tags: ["English", "Writing", "Analysis"]
+tags: ["English Project", "Writing", "Teaching"]
 author: emely
 cover: ../../assets/homework.webp
 coverAlt: "An exhausted girl with homework"
