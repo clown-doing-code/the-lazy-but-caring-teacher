@@ -37,6 +37,7 @@ export const AUTHORS: Record<string, Author> = {
   guest: { name: "Fulano", role: "Guest writer" },
   carlos: { name: "Carlos Cueva" },
   anny: { name: "Anny Hidalgo Vélez" },
+  loribel: {name: "Loribel Taveras"}
 }
 
 export const ABOUT = {
