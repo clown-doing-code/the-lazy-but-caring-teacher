@@ -37,7 +37,8 @@ export const AUTHORS: Record<string, Author> = {
   guest: { name: "Fulano", role: "Guest writer" },
   carlos: { name: "Carlos Cueva" },
   anny: { name: "Anny Hidalgo Vélez" },
-  loribel: {name: "Loribel Taveras"}
+  loribel: { name: "Loribel Taveras" },
+  emely: { name: "Emely Valdez García" },
 }
 
 export const ABOUT = {
@@ -70,10 +71,26 @@ export type Social = {
 export const SOCIALS: Social[] = [
   // TODO: add your profiles, e.g.
   // { label: "Bluesky", href: "https://bsky.app/profile/you", icon: "bluesky" },
-  { label: "Facebook", href: "https://www.facebook.com/emilioaa2612/", icon: "facebook" },
-  { label: "Instagram", href: "https://www.instagram.com/emi_jaa/", icon: "instagram" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/emilio-alcantara-acosta/", icon: "linkedin" },
-  { label: "GitHub", href: "https://github.com/clown-doing-code", icon: "github" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/emilioaa2612/",
+    icon: "facebook",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/emi_jaa/",
+    icon: "instagram",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/emilio-alcantara-acosta/",
+    icon: "linkedin",
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/clown-doing-code",
+    icon: "github",
+  },
   // { label: "Mastodon", href: "https://hachyderm.io/@you", icon: "mastodon" },
   // { label: "YouTube", href: "https://youtube.com/@you", icon: "youtube" },
   // { label: "X", href: "https://x.com/you", icon: "x" },
