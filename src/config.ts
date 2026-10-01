@@ -39,6 +39,12 @@ export const AUTHORS: Record<string, Author> = {
   anny: { name: "Anny Hidalgo Vélez" },
   loribel: { name: "Loribel Taveras" },
   emely: { name: "Emely Valdez García" },
+  felix: { name: "Felix Dickson" },
+  elizabeth: { name: "Elizabeth Maria Gomez" },
+  marilisy: { name: "Marilisy Tejada" },
+  wilfred: { name: "Wilfred Holguin Adames" },
+  yulied: { name: "Yulied Vasquez" },
+  nanyeli: { name: "Nanyeli Concepcion" },
 }
 
 export const ABOUT = {
