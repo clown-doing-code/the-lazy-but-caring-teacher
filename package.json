@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@astrojs/markdown-remark": "^7.3.1",
     "@eslint/js": "^10",
     "eslint": "^10",
     "eslint-plugin-react-hooks": "^7.1.1",
@@ -48,6 +49,7 @@
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
+    "rehype-external-links": "^3.0.0",
     "typescript": "~6",
     "typescript-eslint": "^8"
   }

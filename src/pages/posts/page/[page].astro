@@ -1,0 +1,32 @@
+---
+import PostArchive from "@/components/post-archive.astro"
+import Layout from "@/layouts/main.astro"
+import { getPosts, paginatePosts } from "@/lib/posts"
+
+/**
+ * Pages 2 and up. Page 1 is the archive index at /posts/, so it is skipped
+ * here to keep one canonical URL per page instead of duplicating it at
+ * /posts/page/1/.
+ */
+export async function getStaticPaths() {
+  const posts = await getPosts()
+  const { pageCount } = paginatePosts(posts)
+
+  return Array.from({ length: Math.max(pageCount - 1, 0) }, (_, index) => ({
+    params: { page: String(index + 2) },
+  }))
+}
+
+const posts = await getPosts()
+const { pageNumber, pageCount } = paginatePosts(
+  posts,
+  Number(Astro.params.page)
+)
+---
+
+<Layout
+  title={`Posts, page ${pageNumber}`}
+  description={`Posts, page ${pageNumber} of ${pageCount}. Newest first.`}
+>
+  <PostArchive posts={posts} pageNumber={pageNumber} />
+</Layout>

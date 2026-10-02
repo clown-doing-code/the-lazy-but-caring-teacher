@@ -29,7 +29,7 @@ export const AUTHORS: Record<string, Author> = {
     name: "Emilio Alcántara",
     role: "Teacher",
     avatar: withBase("/profile_picture.jpeg"),
-    url: withBase("/about"),
+    url: withBase("/about/"),
     email: "emiliojacosta@icloud.com",
   },
   // TODO: add co-authors here, then set `author: "<key>"` in a post's
@@ -45,7 +45,10 @@ export const AUTHORS: Record<string, Author> = {
   wilfred: { name: "Wilfred Holguin Adames" },
   yulied: { name: "Yulied Vasquez" },
   nanyeli: { name: "Nanyeli Concepcion" },
-  juan:{name: "Juan de Dios Fernández Camilo"}
+  juan: { name: "Juan de Dios Fernández Camilo" },
+  grissette: { name: "Grissette Sosa" },
+  jeremy: { name: "Jeremy Ventura" },
+  andriw: {name: "Andriw Antonio Padilla"}
 }
 
 export const ABOUT = {
@@ -62,8 +65,8 @@ export type NavItem = {
 
 export const NAV: NavItem[] = [
   { label: "Home", href: withBase("/") },
-  { label: "Posts", href: withBase("/posts") },
-  { label: "About", href: withBase("/about") },
+  { label: "Posts", href: withBase("/posts/") },
+  { label: "About", href: withBase("/about/") },
 ]
 
 export type Social = {

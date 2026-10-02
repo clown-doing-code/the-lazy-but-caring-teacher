@@ -5,7 +5,7 @@ import { getAuthor } from "@/lib/authors"
 import { withBase } from "@/lib/url"
 
 const year = new Date().getFullYear()
-const rssHref = withBase("/rss.xml")
+const rssHref = withBase("/rss.xml/")
 const author = getAuthor(undefined)
 const linkClass =
   "text-muted-foreground transition-colors hover:text-foreground"

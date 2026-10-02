@@ -5,7 +5,7 @@ pubDate: 2026-10-01
 tags: ["English Project", "Writing", "Teaching"]
 author: juan
 cover: ../../assets/sex-work.webp
-coverAlt: ""
+coverAlt: "People protesting"
 ---
 
 Sex work should be legal. All the people talk too bad about this, but some women can’t work another

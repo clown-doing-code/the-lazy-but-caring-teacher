@@ -1,0 +1,95 @@
+---
+import { buttonVariants } from "@/components/ui/button"
+import { pageWindow } from "@/lib/posts"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { cn } from "cn"
+
+interface Props {
+  /** 1-based page currently being viewed. */
+  pageNumber: number
+  pageCount: number
+  /** Site path for a page. Kept here so the URL scheme lives with the caller. */
+  pageHref: (page: number) => string
+}
+
+const { pageNumber, pageCount, pageHref } = Astro.props
+const pages = pageWindow(pageNumber, pageCount)
+const previousHref = pageNumber > 1 ? pageHref(pageNumber - 1) : null
+const nextHref = pageNumber < pageCount ? pageHref(pageNumber + 1) : null
+
+/** Page numbers are bare digits, so a fixed square fits them. */
+const numberClass = cn(
+  buttonVariants({ variant: "outline", size: "icon" }),
+  "size-8"
+)
+
+// The prev/next controls carry a label, so they keep the auto-width default
+// size. Forcing a square here would let the label overflow the border.
+const stepClass = buttonVariants({ variant: "outline" })
+const idleStepClass = cn(stepClass, "text-muted-foreground opacity-50")
+---
+
+{
+  pageCount > 1 && (
+    // Three fixed columns keep the arrows pinned to the edges while the page
+    // numbers stay centred and wrap on narrow screens instead of overflowing.
+    <nav
+      class="grid grid-cols-[auto_1fr_auto] items-center gap-2"
+      aria-label="Pagination"
+    >
+      {previousHref ? (
+        <a href={previousHref} rel="prev" class={stepClass}>
+          <ChevronLeft aria-hidden="true" />
+          Previous
+        </a>
+      ) : (
+        <span class={idleStepClass} aria-disabled="true">
+          <ChevronLeft aria-hidden="true" />
+          Previous
+        </span>
+      )}
+
+      <ol class="flex flex-wrap items-center justify-center gap-2">
+        {pages.map((page) =>
+          page === "…" ? (
+            <li aria-hidden="true" class="text-xs text-muted-foreground">
+              &hellip;
+            </li>
+          ) : page === pageNumber ? (
+            <li>
+              <span
+                class={cn(numberClass, "border-ring bg-muted")}
+                aria-current="page"
+              >
+                <span class="sr-only">Page </span>
+                {page}
+              </span>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={pageHref(page)}
+                class={numberClass}
+                aria-label={`Page ${page}`}
+              >
+                {page}
+              </a>
+            </li>
+          )
+        )}
+      </ol>
+
+      {nextHref ? (
+        <a href={nextHref} rel="next" class={stepClass}>
+          Next
+          <ChevronRight aria-hidden="true" />
+        </a>
+      ) : (
+        <span class={idleStepClass} aria-disabled="true">
+          Next
+          <ChevronRight aria-hidden="true" />
+        </span>
+      )}
+    </nav>
+  )
+}
