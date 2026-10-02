@@ -45,6 +45,7 @@ export const AUTHORS: Record<string, Author> = {
   wilfred: { name: "Wilfred Holguin Adames" },
   yulied: { name: "Yulied Vasquez" },
   nanyeli: { name: "Nanyeli Concepcion" },
+  juan:{name: "Juan de Dios Fernández Camilo"}
 }
 
 export const ABOUT = {
