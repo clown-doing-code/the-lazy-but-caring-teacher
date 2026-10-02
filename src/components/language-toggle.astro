@@ -1,0 +1,88 @@
+---
+import { buttonVariants } from "@/components/ui/button"
+import {
+  LANG_NAMES,
+  LANGS,
+  langOf,
+  postHref,
+  type Lang,
+  type Post,
+} from "@/lib/posts"
+import { cn } from "cn"
+
+interface Props {
+  post: Post
+  /** Every language of this post, as returned by getTranslations(). */
+  translations: Record<Lang, Post | null>
+}
+
+const { post, translations } = Astro.props
+const current = langOf(post)
+const available = LANGS.filter((lang) => translations[lang])
+
+// Most posts are written once, so the untranslated case is the common one and
+// the copy has to read correctly on its own. The language is substituted from
+// the post itself, so the same sentence covers both directions.
+const message =
+  available.length === 1
+    ? `This post is only available in ${LANG_NAMES[current]}.`
+    : null
+---
+
+<div class="flex flex-col items-end gap-2">
+  <div class="flex items-center gap-1" role="group" aria-label="Language">
+    {
+      LANGS.map((lang) => {
+        const target = translations[lang]
+        const isCurrent = lang === current
+        const label = lang.toUpperCase()
+
+        // Current page, linked alternative and unavailable option each get the
+        // same button shape; only the affordance differs, which is the pattern
+        // the pagination control already uses for the same three states.
+        const className = cn(
+          buttonVariants({ variant: "outline", size: "default" }),
+          "w-11",
+          isCurrent && "border-ring bg-muted text-foreground",
+          !isCurrent &&
+            !target &&
+            "pointer-events-none text-muted-foreground/50 opacity-60"
+        )
+
+        const attrs = {
+          "aria-label": LANG_NAMES[lang],
+          "aria-current": isCurrent ? ("true" as const) : undefined,
+          "aria-disabled":
+            !isCurrent && !target ? ("true" as const) : undefined,
+        }
+
+        return isCurrent ? (
+          <span class={className} {...attrs}>
+            {label}
+          </span>
+        ) : target ? (
+          <a
+            href={postHref(target)}
+            hreflang={lang}
+            class={className}
+            {...attrs}
+          >
+            {label}
+          </a>
+        ) : (
+          <span class={className} {...attrs}>
+            {label}
+          </span>
+        )
+      })
+    }
+  </div>
+
+  {
+    message && (
+      <p class="text-xs text-muted-foreground" role="status">
+        {message}
+      </p>
+    )
+  }
+</div>

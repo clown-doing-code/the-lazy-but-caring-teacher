@@ -2,7 +2,7 @@ import rss from "@astrojs/rss"
 
 import { SITE } from "@/config"
 import { getAuthor } from "@/lib/authors"
-import { getPosts } from "@/lib/posts"
+import { getPosts, postHref } from "@/lib/posts"
 import { withBase } from "@/lib/url"
 
 export async function GET(context: { site?: URL }) {
@@ -23,7 +23,7 @@ export async function GET(context: { site?: URL }) {
       title: post.data.title,
       description: post.data.description,
       pubDate: post.data.pubDate,
-      link: withBase(`/posts/${post.id}/`),
+      link: postHref(post),
       categories: post.data.tags,
       author: getAuthor(post.data.author).name,
     })),

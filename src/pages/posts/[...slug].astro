@@ -4,40 +4,68 @@ import { render } from "astro:content"
 import { Clock } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
+import LanguageToggle from "@/components/language-toggle.astro"
 import { UserAvatar } from "@/components/user-avatar"
 import { SITE } from "@/config"
 import Layout from "@/layouts/main.astro"
 import { getAuthor } from "@/lib/authors"
 import { estimateReadingTime, formatDate } from "@/lib/format"
-import { getPosts, type Post } from "@/lib/posts"
+import {
+  LANGS,
+  getAllPosts,
+  getTranslations,
+  langOf,
+  postHref,
+  type Post,
+} from "@/lib/posts"
 import { withBase } from "@/lib/url"
 
 export async function getStaticPaths() {
-  const posts = await getPosts()
+  const posts = await getAllPosts()
 
-  return posts.map((post, index) => ({
-    params: { slug: post.id },
-    props: {
-      post,
-      newer: posts[index - 1] ?? null,
-      older: posts[index + 1] ?? null,
-    },
-  }))
+  return posts.map((post) => {
+    // Neighbours come from the same language, so an English post never links
+    // to its Spanish translation as the "newer" essay.
+    const siblings = posts.filter((other) => langOf(other) === langOf(post))
+    const index = siblings.indexOf(post)
+
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        newer: siblings[index - 1] ?? null,
+        older: siblings[index + 1] ?? null,
+        translations: getTranslations(post, posts),
+      },
+    }
+  })
 }
 
 interface Props {
   post: Post
   newer: Post | null
   older: Post | null
+  translations: Record<(typeof LANGS)[number], Post | null>
 }
 
-const { post, newer, older } = Astro.props
+const { post, newer, older, translations } = Astro.props
 const { Content } = await render(post)
+const lang = langOf(post)
 
 const readingTime = estimateReadingTime(post.body)
 const updated = post.data.updatedDate ?? null
 const author = getAuthor(post.data.author)
 const showDraftBadge = import.meta.env.DEV && post.data.draft
+
+// Point search engines at the sibling translations. A single-language post
+// yields the one alternate pointing back at itself, which is still correct:
+// hreflang describes the set a URL belongs to.
+const alternates = LANGS.map((code) => translations[code])
+  .filter((candidate): candidate is Post => Boolean(candidate))
+  .map((candidate) => ({
+    lang: langOf(candidate),
+    href: new URL(postHref(candidate), Astro.site ?? SITE.url).href,
+  }))
 
 // Resolve a social-preview URL for the cover at full width.
 const coverMeta = post.data.cover
@@ -57,6 +85,8 @@ const ogImage = coverMeta
 <Layout
   title={post.data.title}
   description={post.data.description}
+  lang={lang}
+  alternates={alternates}
   ogType="article"
   publishedTime={post.data.pubDate}
   modifiedTime={updated ?? undefined}
@@ -68,12 +98,16 @@ const ogImage = coverMeta
 >
   <article class="flex flex-col gap-8">
     <header class="flex flex-col gap-4">
-      <a
-        href={withBase("/posts/")}
-        class="w-fit text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        &larr; All posts
-      </a>
+      <div class="flex items-center justify-between gap-4">
+        <a
+          href={withBase("/posts/")}
+          class="w-fit text-sm text-muted-foreground transition-colors hover:text-foreground"
+        >
+          &larr; All posts
+        </a>
+
+        <LanguageToggle post={post} translations={translations} />
+      </div>
 
       {
         post.data.cover && (
@@ -183,10 +217,7 @@ const ogImage = coverMeta
           aria-label="Posts"
         >
           {newer ? (
-            <a
-              href={withBase(`/posts/${newer.id}/`)}
-              class="group flex flex-col gap-1"
-            >
+            <a href={postHref(newer)} class="group flex flex-col gap-1">
               <span class="text-xs text-muted-foreground">&larr; Newer</span>
               <span class="text-sm group-hover:underline">
                 {newer.data.title}
@@ -197,7 +228,7 @@ const ogImage = coverMeta
           )}
           {older && (
             <a
-              href={withBase(`/posts/${older.id}/`)}
+              href={postHref(older)}
               class="group flex flex-col gap-1 sm:items-end sm:text-right"
             >
               <span class="text-xs text-muted-foreground">Older &rarr;</span>

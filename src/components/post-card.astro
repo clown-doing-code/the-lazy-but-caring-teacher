@@ -8,14 +8,14 @@ import { Card } from "@/components/ui/card"
 import { UserAvatar } from "@/components/user-avatar"
 import { getAuthor } from "@/lib/authors"
 import { estimateReadingTime, formatDate } from "@/lib/format"
-import { withBase } from "@/lib/url"
+import { postHref } from "@/lib/posts"
 
 interface Props {
   post: CollectionEntry<"posts">
 }
 
 const { post } = Astro.props
-const href = withBase(`/posts/${post.id}/`)
+const href = postHref(post)
 const author = getAuthor(post.data.author)
 const readingTime = estimateReadingTime(post.body)
 ---

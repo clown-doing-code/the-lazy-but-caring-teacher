@@ -62,13 +62,32 @@ The post body goes here.
 - Set `draft: true` to work on a post without publishing it. Drafts show up in
   `pnpm dev` and are left out of production builds.
 
+### Translations
+
+To publish a Spanish version of a post, add a second file with the same name in
+the `es` folder:
+
+```
+src/content/posts/smoking.md        -> /posts/smoking/
+src/content/posts/es/smoking.md     -> /posts/es/smoking/
+```
+
+The filename in `es/` must match the English one exactly — that is what pairs the
+two. There is no language field in the frontmatter; the folder decides. Note the
+cover path gains a level inside `es/` (`../../../assets/…`). Keep `cover`,
+`tags`, `author` and `pubDate` the same in both so switching language keeps the
+page looking identical apart from the text.
+
+Post pages get an EN/ES toggle. When only one language exists the toggle still
+appears, with the other one disabled and a note explaining what is available.
+
 ## Layout
 
 ```
 src/
   assets/        Cover images referenced from post frontmatter
   components/    Astro components, plus React islands and shadcn/ui in ui/
-  content/       The posts themselves
+  content/       The posts themselves; content/posts/es/ holds translations
   layouts/       Page shell: head tags, header, footer
   lib/           Posts, dates, authors, base-path helpers
   pages/         Routes; posts/page/[page].astro holds archive pages 2+

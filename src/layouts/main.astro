@@ -10,6 +10,8 @@ import { withBase } from "@/lib/url"
 interface Props {
   title?: string
   description?: string
+  /** BCP 47 tag for the page's own language, e.g. "es". Drives <html lang>. */
+  lang?: string
   ogType?: "website" | "article"
   publishedTime?: Date
   modifiedTime?: Date
@@ -20,11 +22,18 @@ interface Props {
   ogImageWidth?: number
   ogImageHeight?: number
   ogImageAlt?: string
+  /**
+   * The other renderings of this page, one per language. Emitted as hreflang
+   * alternates so a search engine can pair the translations instead of
+   * treating them as competing duplicates.
+   */
+  alternates?: { lang: string; href: string }[]
 }
 
 const {
   title,
   description = SITE.description,
+  lang = "en",
   ogType = "website",
   publishedTime,
   modifiedTime,
@@ -33,6 +42,7 @@ const {
   ogImageWidth,
   ogImageHeight,
   ogImageAlt,
+  alternates = [],
 } = Astro.props
 
 const pageTitle = title ? `${title} | ${SITE.name}` : SITE.title
@@ -43,7 +53,7 @@ const metaAuthor = author ?? getAuthor(undefined).name
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,6 +64,11 @@ const metaAuthor = author ?? getAuthor(undefined).name
     <meta name="description" content={description} />
     <meta name="author" content={metaAuthor} />
     <link rel="canonical" href={canonical} />
+    {
+      alternates.map((alternate) => (
+        <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+      ))
+    }
 
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />

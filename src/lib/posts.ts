@@ -1,6 +1,71 @@
 import { getCollection, type CollectionEntry } from "astro:content"
 
+import { withBase } from "@/lib/url"
+
 export type Post = CollectionEntry<"posts">
+
+/** Languages a post can be written in. English needs no path segment. */
+export const LANGS = ["en", "es"] as const
+
+export type Lang = (typeof LANGS)[number]
+
+export const DEFAULT_LANG: Lang = "en"
+
+/**
+ * Long names, for prose rather than the two-letter toggle labels. Also the
+ * source for the "only available in {language}" copy, so a post in either
+ * language reads correctly without a second string.
+ */
+export const LANG_NAMES: Record<Lang, string> = {
+  en: "English",
+  es: "Spanish",
+}
+
+/**
+ * The language a post is written in, read off its path instead of its
+ * frontmatter: `posts/es/smoking.md` gets the id `es/smoking`, so the directory
+ * already says it. Deriving it here means the two can never disagree.
+ */
+export function langOf(post: Post): Lang {
+  const [head] = post.id.split("/")
+  return LANGS.includes(head as Lang) ? (head as Lang) : DEFAULT_LANG
+}
+
+/**
+ * The stem that every language of one post shares, so `smoking` and
+ * `es/smoking` resolve to the same group. This is what pairs a post with its
+ * translation; nothing in the frontmatter has to repeat it.
+ */
+export function translationKey(post: Post): string {
+  const segments = post.id.split("/")
+  return segments.length > 1 ? segments.slice(1).join("/") : post.id
+}
+
+/** The site path for a post. Both languages of a post keep their own URL. */
+export function postHref(post: Post): string {
+  return withBase(`/posts/${post.id}/`)
+}
+
+/**
+ * Every language this post exists in, keyed by language. Entries are null when
+ * a translation is missing, which is the normal case: most posts are written
+ * once. Driven off LANGS so adding a language needs no change here.
+ */
+export function getTranslations(
+  post: Post,
+  all: Post[]
+): Record<Lang, Post | null> {
+  const key = translationKey(post)
+  const found = new Map<Lang, Post>(
+    all
+      .filter((candidate) => translationKey(candidate) === key)
+      .map((candidate) => [langOf(candidate), candidate])
+  )
+
+  const translations = {} as Record<Lang, Post | null>
+  for (const lang of LANGS) translations[lang] = found.get(lang) ?? null
+  return translations
+}
 
 /**
  * Covers render in a 45rem (720px) slot. A source narrower than this is
@@ -34,10 +99,12 @@ function warnOnLowResCovers(posts: Post[]) {
 }
 
 /**
- * All posts, newest first. Drafts are included in dev so they can be
- * previewed, but production builds always exclude them.
+ * Every post in every language, newest first. Route generation needs all of
+ * them, translations included, which is why this is separate from getPosts().
+ * Drafts are included in dev so they can be previewed, but production builds
+ * always exclude them.
  */
-export async function getPosts() {
+export async function getAllPosts() {
   const posts = await getCollection(
     "posts",
     ({ data }) => import.meta.env.DEV || !data.draft
@@ -48,6 +115,20 @@ export async function getPosts() {
   return posts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
+}
+
+/**
+ * Posts for the listings — the archive, the home page and the feed — newest
+ * first.
+ *
+ * Only the default language. A translation is reachable from its English
+ * counterpart through the language toggle, so listing it as well would show the
+ * same essay twice and inflate the counts. The trade-off is that a post
+ * existing *only* in Spanish never surfaces in a listing: publish a translation
+ * alongside its English original, never on its own.
+ */
+export async function getPosts() {
+  return (await getAllPosts()).filter((post) => langOf(post) === DEFAULT_LANG)
 }
 
 /**
