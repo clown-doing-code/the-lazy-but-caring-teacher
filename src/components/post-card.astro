@@ -1,14 +1,13 @@
 ---
 import type { CollectionEntry } from "astro:content"
+import { Image } from "astro:assets"
+import { Clock } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card"
-import { formatDate } from "@/lib/format"
+import { Card } from "@/components/ui/card"
+import { UserAvatar } from "@/components/user-avatar"
+import { getAuthor } from "@/lib/authors"
+import { estimateReadingTime, formatDate } from "@/lib/format"
 import { withBase } from "@/lib/url"
 
 interface Props {
@@ -17,32 +16,104 @@ interface Props {
 
 const { post } = Astro.props
 const href = withBase(`/posts/${post.id}/`)
+const author = getAuthor(post.data.author)
+const readingTime = estimateReadingTime(post.body)
 ---
 
-<Card>
-  <CardHeader>
-    <h3 class="font-heading text-base font-medium">
-      <a href={href} class="hover:underline">{post.data.title}</a>
+<Card className="relative flex-col gap-0 p-0 sm:flex-row">
+  {
+    /* The ratio only holds on mobile, where the image is a banner above the
+      text and has nothing to sit beside. In the split layout the text column
+      runs ~200px tall against a 128px image, and a fixed ratio would leave dead
+      space under it, so the image fills the row instead and object-cover does
+      the cropping. 18rem holds that slot near 1.43:1, the closest the column
+      gets to the ~1.5:1 covers without squeezing the text any further. */
+  }
+  {
+    post.data.cover && (
+      <Image
+        src={post.data.cover}
+        alt={post.data.coverAlt ?? ""}
+        widths={[320, 512, 768]}
+        sizes="(min-width: 640px) 18rem, calc(100vw - 3rem)"
+        loading="lazy"
+        decoding="async"
+        class="aspect-2/1 w-full shrink-0 object-cover sm:aspect-auto sm:w-72"
+      />
+    )
+  }
+
+  <div class="flex min-w-0 flex-1 flex-col gap-3 p-4">
+    <h3 class="font-heading text-base font-medium text-balance">
+      {
+        /* after:inset-0 stretches this link over the whole card. `relative` on
+          the Card is what it resolves against. */
+      }
+      <a href={href} class="after:absolute after:inset-0 hover:underline">
+        {post.data.title}
+      </a>
     </h3>
-    <CardDescription>{post.data.description}</CardDescription>
-  </CardHeader>
-  <CardFooter className="flex-row items-center justify-between gap-4">
-    <time
-      datetime={post.data.pubDate.toISOString()}
-      class="text-muted-foreground"
-    >
-      {formatDate(post.data.pubDate)}
-    </time>
+
+    <p class="text-sm/relaxed text-pretty text-muted-foreground">
+      {post.data.description}
+    </p>
+
     {
-      post.data.tags.length > 0 && (
-        <ul class="flex flex-wrap items-center gap-1">
-          {post.data.tags.map((tag) => (
-            <li>
-              <Badge variant="secondary">{tag}</Badge>
-            </li>
-          ))}
-        </ul>
-      )
+      /* Nested rather than left as siblings of the description: the step from
+        `gap-3` to `gap-2` groups the metadata with the tags below it. */
     }
-  </CardFooter>
+    <div class="flex flex-col gap-2">
+      <div
+        class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground"
+      >
+        <span class="flex items-center gap-1.5">
+          <UserAvatar
+            name={author.name}
+            src={author.avatar}
+            className="size-6"
+            initialsClassName="text-xs"
+          />
+          {
+            author.url ? (
+              <a
+                href={author.url}
+                class="relative font-medium text-foreground underline-offset-4 hover:underline"
+              >
+                {author.name}
+              </a>
+            ) : (
+              <span class="font-medium text-foreground">{author.name}</span>
+            )
+          }
+        </span>
+        <span aria-hidden="true">&middot;</span>
+        <time datetime={post.data.pubDate.toISOString()}>
+          {formatDate(post.data.pubDate)}
+        </time>
+        {
+          readingTime > 0 && (
+            <>
+              <span aria-hidden="true">&middot;</span>
+              <span class="inline-flex items-center gap-1">
+                <Clock aria-hidden="true" className="size-3.5" />
+                {readingTime} min read
+              </span>
+            </>
+          )
+        }
+      </div>
+
+      {
+        post.data.tags.length > 0 && (
+          <ul class="flex flex-wrap items-center gap-1">
+            {post.data.tags.map((tag) => (
+              <li>
+                <Badge variant="secondary">{tag}</Badge>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
 </Card>

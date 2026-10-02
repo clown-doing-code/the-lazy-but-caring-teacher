@@ -28,7 +28,7 @@ export const AUTHORS: Record<string, Author> = {
   emilio: {
     name: "Emilio Alcántara",
     role: "Teacher",
-    avatar: withBase("/profile_picture.jpeg"),
+    avatar: withBase("/profile-photo.jpeg"),
     url: withBase("/about/"),
     email: "emiliojacosta@icloud.com",
   },
@@ -48,14 +48,14 @@ export const AUTHORS: Record<string, Author> = {
   juan: { name: "Juan de Dios Fernández Camilo" },
   grissette: { name: "Grissette Sosa" },
   jeremy: { name: "Jeremy Ventura" },
-  andriw: {name: "Andriw Antonio Padilla"}
+  andriw: { name: "Andriw Antonio Padilla" },
 }
 
 export const ABOUT = {
   // TODO: write these in first person
   intro: ["I like computer stuffs and coding."],
   // TODO: replace with the subjects you actually cover
-  topics: ["English", "Computer Science", "Life"],
+  topics: ["#English", "#Computer Science", "#Life"],
 }
 
 export type NavItem = {
