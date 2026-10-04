@@ -46,8 +46,6 @@ La posibilidad de que estuviera cometiendo un error era baja, pero no era cero. 
 3. **Algunos estudiantes naturalmente escriben mejor de lo que hablan.**
 4. **La intuición de un docente es útil, pero no constituye una prueba.**
 
-![Meme](../../assets/crazy-meme.png "¿Loco? Yo estaba loco una vez")
-
 Mientras más sospechaba de la IA, más incómodo me sentía con la posibilidad de estar equivocado. Así que la pregunta pasó de *¿La IA escribió esto?* a *¿Puede el estudiante demostrar que realmente se apropió de lo que escribió?* Y, sorprendentemente, la mayoría pudo demostrar que entendía lo que había escrito. En realidad, estaban buscando palabras para expresar sus ideas, lo que finalmente me llevó a darme cuenta de que estaba equivocado—no completamente, pero sí lo suficiente como para reconsiderar mis suposiciones. En otras palabras, ¡sí aprendieron! Y ese es, en gran medida, el punto.
 
 ## Estamos de Vuelta: Lección Aprendida
