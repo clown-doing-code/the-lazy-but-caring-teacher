@@ -7,15 +7,6 @@ cover: ../../assets/process-writing.webp
 coverAlt: "A girl floating while holding ballons"
 ---
 
----
-title: "Perspective of the Process of Creative Writing in an AI Era"
-description: ""
-pubDate: 2026-10-01
-tags: ["#English Project", "#Writing", "#Teaching", "#Reflection"]
-cover: ../../assets/process-writing.webp
-coverAlt: "A girl floating while holding balloons"
----
-
 In a world where **AI** *(unless you have been living under a rock, I'll assume that you are familiar with the concept of **Artificial Intelligence**)* or **SI** *([Super Intelligence as Trump proclaims](https://www.foxnews.com/live-news/ai-leaders-trump-meeting-google-executive-order))* is taking over, the line that divides the job of a teacher from manageable to challenging is becoming blurry. Not because AI is taking our jobs, as many people say, but mostly because students are somehow taking advantage of AI in a way that teachers who are not catching up with this technology are being outperformed; ironically, not by peers. This writing has no intention of shaming students, as technology is meant to be used, but the main argument of this writing is to analyze how education is mutating from the perspective of a teacher and from the observations of an educational project carried out at my workplace where students were the focus.
 
 ## Background
