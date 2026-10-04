@@ -1,9 +1,10 @@
 ---
 import { Image, getImage } from "astro:assets"
 import { render } from "astro:content"
-import { Clock } from "lucide-react"
+import { ArrowLeft, Clock } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
+import { buttonVariants } from "@/components/ui/button"
 import LanguageToggle from "@/components/language-toggle.astro"
 import { UserAvatar } from "@/components/user-avatar"
 import { SITE } from "@/config"
@@ -19,6 +20,7 @@ import {
   type Post,
 } from "@/lib/posts"
 import { withBase } from "@/lib/url"
+import { cn } from "cn"
 
 export async function getStaticPaths() {
   const posts = await getAllPosts()
@@ -101,15 +103,23 @@ const ogImage = coverMeta
       <div class="flex items-center justify-between gap-4">
         <a
           href={withBase("/posts/")}
-          class="w-fit text-sm text-muted-foreground transition-colors hover:text-foreground"
+          class={cn(
+            buttonVariants({ variant: "ghost" }),
+            "text-muted-foreground hover:text-foreground"
+          )}
         >
-          &larr; All posts
+          <ArrowLeft aria-hidden="true" />
+          All posts
         </a>
 
         <LanguageToggle post={post} translations={translations} />
       </div>
 
       {
+        /* coverAlt can't be missing when cover is set — the schema fails the
+          build otherwise — so the ?? "" below only satisfies the optional
+          type. ogImageAlt above passes the raw value, which is fine: the meta
+          tag simply omits the attribute. */
         post.data.cover && (
           <Image
             src={post.data.cover}
@@ -125,9 +135,7 @@ const ogImage = coverMeta
       }
 
       <div class="flex flex-col gap-3">
-        <h1
-          class="font-heading text-3xl font-medium tracking-tight text-balance"
-        >
+        <h1 class="font-heading text-4xl font-medium tracking-tight">
           {post.data.title}
         </h1>
         <p class="text-lg text-pretty text-muted-foreground">
@@ -135,10 +143,18 @@ const ogImage = coverMeta
         </p>
       </div>
 
+      {
+        /* One row at every width; only the narrow case is restacked. Giving the
+          byline a full basis below sm drops the date and the reading time onto
+          the next line, where the row's own wrapping used to scatter them
+          instead. At 40rem the whole set fits on one line even with the longest
+          name, so nothing above the breakpoint moves. The leading separator is
+          hidden with it — a row that opens on a middot reads as a mistake. */
+      }
       <div
         class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground"
       >
-        <span class="flex items-center gap-2 text-foreground">
+        <span class="flex w-full items-center gap-2 text-foreground sm:w-auto">
           <UserAvatar
             name={author.name}
             src={author.avatar}
@@ -161,7 +177,7 @@ const ogImage = coverMeta
             }
           </span>
         </span>
-        <span aria-hidden="true">&middot;</span>
+        <span aria-hidden="true" class="hidden sm:inline">&middot;</span>
         <time datetime={post.data.pubDate.toISOString()}>
           {formatDate(post.data.pubDate)}
         </time>

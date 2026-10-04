@@ -30,7 +30,7 @@ export const AUTHORS: Record<string, Author> = {
     role: "Teacher",
     avatar: withBase("/profile-photo.jpeg"),
     url: withBase("/about/"),
-    email: "emiliojacosta@icloud.com",
+    email: "",
   },
   // TODO: add co-authors here, then set `author: "<key>"` in a post's
   // frontmatter. e.g.

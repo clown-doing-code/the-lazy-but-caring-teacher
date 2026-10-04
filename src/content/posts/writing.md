@@ -1,6 +1,6 @@
 ---
 title: "Perspective of the Process of Creative Writing in an AI Era"
-description: "Some yapping about AI"
+description: "Thoughts about AI and how it enfluences the process of creative writing"
 pubDate: 2026-10-01
 tags: ["#English Project", "#Writing", "#Teaching", "#Reflection"]
 cover: ../../assets/process-writing.webp
@@ -45,8 +45,6 @@ The possibility that I might be making a mistake was low, but not zero. But here
 2. **A student may have received legitimate help.**
 3. **Some students naturally write better than they speak.**
 4. **A teacher's intuition is useful, but it isn't proof.**
-
-![Meme](../../assets/crazy-meme.png "Crazy? I was crazy once")
 
 The more I suspected AI, the more uncomfortable I became with the possibility that I might be wrong. So the question shifted from *Did AI write this?* to *Can the student demonstrate ownership of what they wrote?* And surprisingly enough, most of them could demonstrate that they understood what they had written. They were actually looking for words to express their ideas, which ultimately led me to realize that I had been wrong—not completely, but enough to reconsider my assumptions. In other words, they did learn! And that's mostly the point.
 

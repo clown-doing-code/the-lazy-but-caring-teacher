@@ -20,7 +20,7 @@ staging environment, so a push goes live.
 ## Adding a post
 
 - Posts are markdown in `src/content/posts/`. The filename without extension **is** the slug and the URL — `smoking.md` → `/posts/smoking/`. Nothing in frontmatter sets the path.
-- Schema is enforced at build time in `src/content.config.ts`: `title`, `description`, `pubDate`, `tags`, `author`, `cover`, `coverAlt`. See `src/content/posts/smoking.md` for a complete example.
+- Schema is enforced at build time in `src/content.config.ts`: `title`, `description`, `pubDate`, `tags`, `author` are required; `cover` and `coverAlt` are optional *individually*, but a refine fails the build if a post sets `cover` without `coverAlt` — a cover with no alt text is announced as decorative, and a post cover never is. See `src/content/posts/smoking.md` for a complete example.
 - `pubDate` is date-only and parsed as UTC midnight; `src/lib/format.ts` formats in UTC so dates don't render a day early. Don't add timezones.
 - `author` is a key into `AUTHORS` in `src/config.ts` — add new student authors there. An unknown key silently falls back to the primary author in production (dev only warns), so a typo will not fail the build.
 - `cover` must be a relative path into `src/assets/` (e.g. `../../assets/foo.webp`), never `public/`. That path is what feeds Astro's image pipeline, the responsive `srcset`, and the OG image.

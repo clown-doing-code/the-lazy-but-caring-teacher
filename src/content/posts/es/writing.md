@@ -1,6 +1,6 @@
 ---
 title: "Perspectiva del proceso de escritura creativa en la era de la IA"
-description: "Hablando acerca de la AI y interviene en el proceso de escritura creativa"
+description: "Hablando acerca de la AI y como esta interviene en el proceso de escritura creativa"
 pubDate: 2026-10-01
 tags: ["#English Project", "#Writing", "#Teaching", "#Reflection"]
 cover: ../../../assets/process-writing.webp
