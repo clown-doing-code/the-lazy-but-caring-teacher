@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: yulied
 cover: ../../assets/sex-education.webp
 coverAlt: "An illustration about sex education"
+draft: true
 ---
 
 Sexual education is an important topic that affects young people and their future. Many teenagers have questions about their bodies, relationships, and sexual health, but they may not always have accurate information. Schools can provide students with reliable and age-appropriate information in a safe environment. Sexual education should be mandatory in schools because it can help prevent teenage pregnancies and sexually transmitted infections, and it can teach students about consent, boundaries, and healthy relationships.

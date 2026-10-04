@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: marilisy
 cover: ../../assets/plastic_bags.webp
 coverAlt: "Blue plastic bags"
+draft: true
 ---
 
 Plastic bags are used every day by many people. They are useful, but they can cause problems for the environment. Plastic bags should be banned because the cause pollution.

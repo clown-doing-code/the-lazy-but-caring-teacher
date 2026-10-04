@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: emely
 cover: ../../assets/homework.webp
 coverAlt: "An exhausted girl with homework"
+draft: true
 ---
 
 Homework can helps students learn. But too much homework can be a problema. It can cause streess and reduce free time. For these reasons, too much homework should banned.

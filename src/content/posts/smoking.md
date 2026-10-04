@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: nanyeli
 cover: ../../assets/smoking.webp
 coverAlt: "A person smoking"
+draft: true
 ---
 
 Smoking is a big problem in the world. Smoking should be banned in all public places because it is bad for people's health and it pollutes the environment.

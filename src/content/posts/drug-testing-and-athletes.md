@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: andriw
 cover: ../../assets/drug-sports.webp
 coverAlt: "Drugs and a medal"
+draft: true
 ---
 
 All high school athletes should be drug tested. Athletes cannot use drugs when they are on a team because it is illegal in any sport. Many athletes are removed from their teams because drugs are found in their bodies. High school athletes should be drug tested because it protects their health and future, and it keeps sport fair.

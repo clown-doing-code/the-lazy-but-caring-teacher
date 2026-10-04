@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: wilfred
 cover: ../../assets/school-uniforms.webp
 coverAlt: "Students wearing uniforms"
+draft: true
 ---
 
 At first glance, many people think school uniforms should be required, but in reality, they should

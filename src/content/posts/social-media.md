@@ -6,6 +6,7 @@ tags: ["English Project", "Writing", "Teaching"]
 author: carlos
 cover: ../../assets/social-media.png
 coverAlt: "A hand holding a smartphone showing a grid of social media app icons"
+draft: true
 ---
 
 Social media is an important part of modern life. It has changed the way people communicate 
