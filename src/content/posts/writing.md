@@ -1,6 +1,6 @@
 ---
 title: "Perspective of the Process of Creative Writing in an AI Era"
-description: ""
+description: "Some yapping about AI"
 pubDate: 2026-10-01
 tags: ["#English Project", "#Writing", "#Teaching", "#Reflection"]
 cover: ../../assets/process-writing.webp
