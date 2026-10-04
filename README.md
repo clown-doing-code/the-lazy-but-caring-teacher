@@ -54,7 +54,7 @@ coverAlt: "A person smoking"
 The post body goes here.
 ```
 
-- `author` is a key from `AUTHORS` in `src/config.ts` — add a student there
+- `author` is a key from `AUTHORS` in `src/lib/authors.ts` — add a student there
   first, otherwise the post falls back to you without any warning in production.
 - `cover` must point into `src/assets/`, not `public/`, so Astro can generate
   the responsive images and the social preview image. Give it at least 1440px of

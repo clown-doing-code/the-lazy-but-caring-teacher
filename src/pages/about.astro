@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import SocialIcon from "@/components/social-icon.astro"
-import { UserAvatar } from "@/components/user-avatar"
+import UserAvatar from "@/components/user-avatar.astro"
 import { ABOUT, SOCIALS } from "@/config"
 import { getAuthor } from "@/lib/authors"
 import Layout from "@/layouts/main.astro"
@@ -23,8 +23,8 @@ const rssHref = withBase("/rss.xml/")
         class="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7"
       >
         <UserAvatar
-          name={author.name}
-          src={author.avatar}
+          author={author}
+          size={128}
           className="size-24 shrink-0 sm:size-32"
           initialsClassName="text-2xl sm:text-3xl"
         />

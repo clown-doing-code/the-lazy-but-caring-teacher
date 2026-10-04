@@ -1,7 +1,7 @@
 import { defineCollection } from "astro:content"
 import { glob } from "astro/loaders"
 import { z } from "astro/zod"
-import { PRIMARY_AUTHOR } from "@/config"
+import { PRIMARY_AUTHOR } from "@/lib/authors"
 
 const posts = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/posts" }),
@@ -16,7 +16,7 @@ const posts = defineCollection({
         updatedDate: z.coerce.date().optional(),
         tags: z.array(z.string()).default([]),
         draft: z.boolean().default(false),
-        /** Key into AUTHORS in src/config.ts. */
+        /** Key into AUTHORS in src/lib/authors.ts. */
         author: z.string().default(PRIMARY_AUTHOR),
         /** Shown above the title. Omit for posts without one. */
         cover: image().optional(),

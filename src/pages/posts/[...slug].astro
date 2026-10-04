@@ -6,7 +6,7 @@ import { ArrowLeft, Clock } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import LanguageToggle from "@/components/language-toggle.astro"
-import { UserAvatar } from "@/components/user-avatar"
+import UserAvatar from "@/components/user-avatar.astro"
 import { SITE } from "@/config"
 import Layout from "@/layouts/main.astro"
 import { getAuthor } from "@/lib/authors"
@@ -120,6 +120,9 @@ const ogImage = coverMeta
           build otherwise — so the ?? "" below only satisfies the optional
           type. ogImageAlt above passes the raw value, which is fine: the meta
           tag simply omits the attribute. */
+        /* bg-muted matches the card covers: this one is eager and high priority
+          so it rarely shows, but on a slow connection the reserved box would
+          otherwise be bare while the image arrives. */
         post.data.cover && (
           <Image
             src={post.data.cover}
@@ -129,7 +132,7 @@ const ogImage = coverMeta
             loading="eager"
             fetchpriority="high"
             decoding="async"
-            class="aspect-2/1 w-full rounded-xl border border-border object-cover"
+            class="aspect-2/1 w-full rounded-xl border border-border bg-muted object-cover"
           />
         )
       }
@@ -156,8 +159,7 @@ const ogImage = coverMeta
       >
         <span class="flex w-full items-center gap-2 text-foreground sm:w-auto">
           <UserAvatar
-            name={author.name}
-            src={author.avatar}
+            author={author}
             className="size-6"
             initialsClassName="text-xs"
           />

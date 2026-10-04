@@ -4,7 +4,7 @@ import { Clock } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
-import { UserAvatar } from "@/components/user-avatar"
+import UserAvatar from "@/components/user-avatar.astro"
 import { getAuthor } from "@/lib/authors"
 import { estimateReadingTime, formatDate } from "@/lib/format"
 import { postHref, type Post } from "@/lib/posts"
@@ -31,6 +31,10 @@ const readingTime = estimateReadingTime(post.body)
   {
     /* coverAlt can't be missing when cover is set — the schema fails the build
       otherwise — so the ?? "" below only satisfies the optional type. */
+    /* bg-muted is the placeholder: this cover is lazy-loaded and can sit blank
+      for a moment while you scroll, so the reserved box gets a surface to show
+      until the image data lands. Background-color on the <img> itself needs no
+      JS and no dismissal timer, unlike a skeleton. */
     post.data.cover && (
       <Image
         src={post.data.cover}
@@ -39,7 +43,7 @@ const readingTime = estimateReadingTime(post.body)
         sizes="(min-width: 640px) 18rem, calc(100vw - 3rem)"
         loading="lazy"
         decoding="async"
-        class="aspect-2/1 w-full shrink-0 object-cover sm:aspect-auto sm:w-72"
+        class="aspect-2/1 w-full shrink-0 bg-muted object-cover sm:aspect-auto sm:w-72"
       />
     )
   }
@@ -77,8 +81,7 @@ const readingTime = estimateReadingTime(post.body)
         }
         <span class="flex min-w-0 items-center gap-1.5">
           <UserAvatar
-            name={author.name}
-            src={author.avatar}
+            author={author}
             className="size-6"
             initialsClassName="text-xs"
           />
