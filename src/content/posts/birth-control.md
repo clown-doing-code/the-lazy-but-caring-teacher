@@ -6,7 +6,12 @@ tags: ["English Project", "Writing", "Teaching"]
 author: elizabeth
 cover: ../../assets/birth-control.webp
 <<<<<<< HEAD
+<<<<<<< HEAD
 coverAlt: "Some pills shown"
+=======
+# TODO: replace with a real description of birth-control.webp
+coverAlt: "Some pills and pregnancy test"
+>>>>>>> dev-branch
 =======
 # TODO: replace with a real description of birth-control.webp
 coverAlt: "Some pills and pregnancy test"
