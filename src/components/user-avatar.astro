@@ -1,0 +1,52 @@
+---
+import { getImage } from "astro:assets"
+
+import { UserAvatarFrame } from "@/components/user-avatar-frame"
+import type { Author } from "@/lib/authors"
+
+type Props = {
+  author: Author
+  /**
+   * Rendered box size in px at its widest breakpoint — must agree with the size
+   * in `className`. The photo is generated at 2x for retina displays.
+   */
+  size?: number
+  /** Sizes the avatar box. Omit to use the shadcn `default` size. */
+  className?: string
+  /** Size of the initials shown when there is no photo. */
+  initialsClassName?: string
+}
+
+const { author, size = 24, className, initialsClassName } = Astro.props
+
+// Optimizing per call site rather than serving one size to all of them is the
+// point of running the photo through the pipeline: a byline avatar rendered at
+// 24px costs a couple of KB where the original was ~97 KB, while /about still
+// gets enough resolution for its 128px box. fit: "cover" crops a non-square
+// source instead of distorting it, matching the OG image.
+const pixels = size * 2
+const avatar = author.avatar
+  ? await getImage({
+      src: author.avatar,
+      width: pixels,
+      height: pixels,
+      fit: "cover",
+      format: "webp",
+    })
+  : null
+---
+
+{
+  /* Resolves the photo, then hands off to the React shell. The split is forced
+    by Base UI: AvatarFallback reads the root's context, and Astro gives every
+    React component its own root, so the parts cannot be composed here. See
+    user-avatar-frame.tsx. */
+}
+<UserAvatarFrame
+  name={author.name}
+  src={avatar?.src}
+  width={avatar?.attributes.width}
+  height={avatar?.attributes.height}
+  className={className}
+  initialsClassName={initialsClassName}
+/>

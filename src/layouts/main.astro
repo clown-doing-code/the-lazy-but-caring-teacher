@@ -1,4 +1,6 @@
 ---
+import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url"
+
 import "@/styles/global.css"
 
 import SiteFooter from "@/components/site-footer.astro"
@@ -58,6 +60,23 @@ const metaAuthor = author ?? getAuthor(undefined).name
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={withBase("/favicon.svg")} />
+    {
+      /* The font arrives in the CSS global.css imports, which is discovered too
+        late to help first paint — text renders in the fallback and reflows on
+        swap. Preloading the file the latin @font-face points at starts that
+        fetch during the preload scan instead. `?url` resolves to the same
+        hashed asset the bundled CSS references, so the two cannot drift.
+        crossorigin is mandatory: fonts are fetched in CORS mode even from our
+        own origin. Latin only — the package ships 7 subsets, but unicode-range
+        means the other six are never requested for en/es content. */
+    }
+    <link
+      rel="preload"
+      href={interLatinWoff2}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <meta name="generator" content={Astro.generator} />
 
     <title>{pageTitle}</title>

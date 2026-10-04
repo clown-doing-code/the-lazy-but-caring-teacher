@@ -5,7 +5,12 @@ pubDate: 2026-10-01
 tags: ["English Project", "Writing", "Teaching"]
 author: elizabeth
 cover: ../../assets/birth-control.webp
+<<<<<<< HEAD
 coverAlt: "Some pills shown"
+=======
+# TODO: replace with a real description of birth-control.webp
+coverAlt: "Some pills and pregnancy test"
+>>>>>>> dev-branch
 ---
 
 Buying birth control without a prescription saves time and money and removes barriers for people without insurance or easy access to a clinic. It is backed by established safety, since it's a well-tested, widely used medication. Selling it over the counter follows the same model already working in other countries.

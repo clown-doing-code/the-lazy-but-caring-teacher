@@ -1,5 +1,9 @@
 import { withBase } from "@/lib/url"
 
+// The author registry lives in src/lib/authors.ts rather than here. This module
+// is imported by the MobileNav island, so it is in the client bundle, and
+// AUTHORS now imports an image from src/assets — which would drag that file
+// client-side. Keep this file to plain, serializable site data.
 export const SITE = {
   // TODO: replace with the real title and tagline
   name: "The Lazy but Caring Teacher <3",
@@ -9,47 +13,6 @@ export const SITE = {
   url: "https://thelazybutcaringteacher.site",
   locale: "en_US",
 } as const
-
-export type Author = {
-  name: string
-  role?: string
-  /** Path to a file in /public, e.g. "/me.jpg". Falls back to initials. */
-  avatar?: string
-  /** Where the byline links. Omit to render the name as plain text. */
-  url?: string
-  email?: string
-}
-
-// The author whose page /about describes, and the byline default for any post
-// that does not set `author` in its frontmatter.
-export const PRIMARY_AUTHOR = "emilio"
-
-export const AUTHORS: Record<string, Author> = {
-  emilio: {
-    name: "Emilio Alcántara",
-    role: "Teacher",
-    avatar: withBase("/profile-photo.jpeg"),
-    url: withBase("/about/"),
-    email: "",
-  },
-  // TODO: add co-authors here, then set `author: "<key>"` in a post's
-  // frontmatter. e.g.
-  guest: { name: "Fulano", role: "Guest writer" },
-  carlos: { name: "Carlos Cueva" },
-  anny: { name: "Anny Hidalgo Vélez" },
-  loribel: { name: "Loribel Taveras" },
-  emely: { name: "Emely Valdez García" },
-  felix: { name: "Felix Dickson" },
-  elizabeth: { name: "Elizabeth Maria Gomez" },
-  marilisy: { name: "Marilisy Tejada" },
-  wilfred: { name: "Wilfred Holguin Adames" },
-  yulied: { name: "Yulied Vasquez" },
-  nanyeli: { name: "Nanyeli Concepcion" },
-  juan: { name: "Juan de Dios Fernández Camilo" },
-  grissette: { name: "Grissette Sosa" },
-  jeremy: { name: "Jeremy Ventura" },
-  andriw: { name: "Andriw Antonio Padilla" },
-}
 
 export const ABOUT = {
   // TODO: write these in first person

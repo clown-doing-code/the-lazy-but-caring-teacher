@@ -22,7 +22,7 @@ staging environment, so a push goes live.
 - Posts are markdown in `src/content/posts/`. The filename without extension **is** the slug and the URL — `smoking.md` → `/posts/smoking/`. Nothing in frontmatter sets the path.
 - Schema is enforced at build time in `src/content.config.ts`: `title`, `description`, `pubDate`, `tags`, `author` are required; `cover` and `coverAlt` are optional *individually*, but a refine fails the build if a post sets `cover` without `coverAlt` — a cover with no alt text is announced as decorative, and a post cover never is. See `src/content/posts/smoking.md` for a complete example.
 - `pubDate` is date-only and parsed as UTC midnight; `src/lib/format.ts` formats in UTC so dates don't render a day early. Don't add timezones.
-- `author` is a key into `AUTHORS` in `src/config.ts` — add new student authors there. An unknown key silently falls back to the primary author in production (dev only warns), so a typo will not fail the build.
+- `author` is a key into `AUTHORS` in `src/lib/authors.ts` — add new student authors there. An unknown key silently falls back to the primary author in production (dev only warns), so a typo will not fail the build.
 - `cover` must be a relative path into `src/assets/` (e.g. `../../assets/foo.webp`), never `public/`. That path is what feeds Astro's image pipeline, the responsive `srcset`, and the OG image.
 - Covers narrower than **1440px** produce a `[covers]` build warning and look blurry in the 45rem card slot. It's warn-only — read the build output instead of assuming it passed.
 - `draft: true` renders in dev with a Draft badge and is excluded from production builds.
@@ -44,6 +44,8 @@ staging environment, so a push goes live.
 - Archive page 1 is `src/pages/posts/index.astro`; pages 2+ come from `src/pages/posts/page/[page].astro`. The static `page/` segment exists so a post slug can never collide with a page number. Page size is `POSTS_PER_PAGE` in `src/lib/posts.ts`.
 - `post-archive.astro` takes the **full** post list plus a `pageNumber` and slices internally. Don't pass a pre-sliced list.
 - `src/components/ui/` is shadcn-generated; hand-edits are fine and `eslint.config.js` already relaxes `react-refresh/only-export-components` there. These are Base UI components: use `render={<X />}`, **not** Radix's `asChild`.
+- Base UI parts that read context must be composed **inside one `.tsx`**: Astro renders every React component it meets as its own root, so splitting e.g. `Avatar` and `AvatarFallback` across an `.astro` boundary leaves the child without the root's context and the build fails with `Base UI error #13`. `src/components/user-avatar.astro` (does the `getImage()` work) and `user-avatar-frame.tsx` (holds the composition) are the worked example.
+- **`src/config.ts` is in the client bundle** — `MobileNav` is a `client:load` island and imports `NAV` from it. Keep that file to plain serializable data. Anything importing an image or a Node API belongs in a server-only module; that is why the author registry lives in `src/lib/authors.ts`.
 - `cn` is imported from the `cn` npm package directly in existing files; `src/lib/utils.ts` only re-exports it. Match whatever the surrounding file does.
 - Social brand icons are wired up one-by-one in `src/lib/social-icons.ts` (8 slugs; LinkedIn intentionally falls back to a globe). A new network needs an entry there.
 
