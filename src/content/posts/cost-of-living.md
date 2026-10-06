@@ -2,9 +2,10 @@
 title: "The Cost of Living"
 description: "An analysis of W.W. Jacobs's The Monkey's Paw, and the choices that lead the White family to ruin."
 pubDate: 2025-09-20
-tags: ["English", "Writing", "Analysis"]
+tags: ["#English", "#Writing", "#Analysis"]
 cover: ../../assets/monkey-paw.png
 coverAlt: "A dried, shriveled monkey's paw with a claw-like hand"
+featured: true
 ---
 
 Life is full of decisions, some can be hard, others don't. No matter the age, decisions are part of our journey in this life. From kids to elderly, everyone at one point in their life has to make a decision. But here's the catch, the problem is not making the judgement itself, rather what circumstances lead us to face those difficult moments when life is expecting us to choose. It's up to us whether we go all in or dismiss a choice. The purpose of this essay is to point out some takeaways to avoid such difficult conclusions like the Whites’, or what to take into consideration when deciding. Whether we have a strong desire to get something we crave; a feeling is interfering in our decision-making; or a hard choice is holding us back.

@@ -132,6 +132,17 @@ export async function getPosts() {
 }
 
 /**
+ * Featured posts for highlighting on the home page. English only, sorted newest
+ * first. Returns up to 6 posts by default to keep the bento layout clean.
+ */
+export async function getFeaturedPosts(limit = 6) {
+  const posts = await getAllPosts()
+  return posts
+    .filter((post) => langOf(post) === DEFAULT_LANG && post.data.featured)
+    .slice(0, limit)
+}
+
+/**
  * Posts shown per page in the archive. Bump this and every archive page is
  * rebuilt at the new size; nothing else has to change.
  */

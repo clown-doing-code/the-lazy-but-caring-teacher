@@ -2,7 +2,7 @@
 title: "Book Report: The Old Man and The Sea"
 description: "A book report on Hemingway's 1952 novella, covering Santiago's struggle and whether the ending lands."
 pubDate: 2025-12-01
-tags: ["English", "Writing", "Book Report"]
+tags: ["#English", "#Writing", "#Book Report"]
 cover: ../../assets/man-and-sea.png
 coverAlt: "An old fisherman alone in a small skiff on a wide, open sea"
 ---

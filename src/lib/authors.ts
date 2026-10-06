@@ -20,7 +20,7 @@ export const PRIMARY_AUTHOR = "emilio"
 export const AUTHORS: Record<string, Author> = {
   emilio: {
     name: "Emilio Alcántara",
-    role: "Teacher",
+    role: "Lazy Teacher",
     avatar: profilePhoto,
     url: withBase("/about/"),
     email: "",

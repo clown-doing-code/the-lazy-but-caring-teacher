@@ -21,6 +21,7 @@ const posts = defineCollection({
         /** Shown above the title. Omit for posts without one. */
         cover: image().optional(),
         coverAlt: z.string().optional(),
+        featured: z.boolean().optional().default(false),
       })
       // A cover with no alt text is announced as decorative, and a post cover
       // is never decorative, so the two travel together. Kept as a refine

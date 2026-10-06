@@ -1,13 +1,17 @@
 ---
+import Highlights from "@/components/highlights.astro"
 import PostCard from "@/components/post-card.astro"
 import { buttonVariants } from "@/components/ui/button"
 import { SITE } from "@/config"
 import Layout from "@/layouts/main.astro"
-import { getPosts } from "@/lib/posts"
+import { getFeaturedPosts, getPosts } from "@/lib/posts"
 import { withBase } from "@/lib/url"
 import { cn } from "cn"
 
-const posts = (await getPosts()).slice(0, 3)
+const [featuredPosts, posts] = await Promise.all([
+  getFeaturedPosts(),
+  getPosts().then((p) => p.slice(0, 3)),
+])
 ---
 
 <Layout>
@@ -36,6 +40,8 @@ const posts = (await getPosts()).slice(0, 3)
       </a>
     </div>
   </section>
+
+  <Highlights posts={featuredPosts} />
 
   <section id="latest" class="mt-16 flex scroll-mt-20 flex-col gap-6">
     <h2 class="font-heading text-lg font-medium tracking-tight">

@@ -1,0 +1,29 @@
+---
+import PostCard from "@/components/post-card.astro"
+import type { Post } from "@/lib/posts"
+
+interface Props {
+  posts: Post[]
+}
+
+const { posts } = Astro.props
+
+// Show up to 3 highlighted posts
+const featured = posts.slice(0, 3)
+---
+
+{
+  featured.length > 0 && (
+    <section class="mt-16 flex flex-col gap-6">
+      <h2 class="font-heading text-lg font-medium tracking-tight flex items-center gap-2">
+        <span aria-hidden="true">★</span>
+        <span class="underline decoration-1 underline-offset-2">Highlights</span>
+      </h2>
+      <div class="grid gap-4">
+        {featured.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </section>
+  )
+}
